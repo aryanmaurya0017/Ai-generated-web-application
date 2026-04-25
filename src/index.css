@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  /* Bento Grid Palette */
+  --color-dark-bg: #050505;
+  --color-card-bg: rgba(20, 20, 25, 0.8);
+  --color-neon-cyan: #00f2ff;
+  --color-neon-pink: #ff00ea;
+  --color-neon-lime: #39ff14;
+}
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-white font-sans selection:bg-neon-pink selection:text-white antialiased;
+    background-image: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05), transparent 70%);
+    background-size: 100% 4px, 100% 100%;
+  }
+}
+
+@layer utilities {
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr 280px;
+    grid-template-rows: 80px 1fr 180px;
+    gap: 16px;
+    padding: 24px;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+
+  /* Responsive Bento Adjustment */
+  @media (max-width: 1024px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      height: auto;
+      overflow-y: auto;
+    }
+  }
+
+  .card {
+    @apply bg-card-bg border border-white/10 rounded-2xl relative overflow-hidden backdrop-blur-md transition-all duration-300;
+  }
+
+  .neon-cyan-glow {
+    @apply border-neon-cyan/50;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+  }
+
+  .neon-pink-glow {
+    @apply border-neon-pink/50;
+    box-shadow: 0 0 15px rgba(255, 0, 234, 0.15);
+  }
+
+  .neon-lime-glow {
+    @apply border-neon-lime/50;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.15);
+  }
+
+  .glitch {
+    position: relative;
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    animation: glitch 1s infinite linear alternate-reverse;
+  }
+
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.2;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes glitch {
+    0% { transform: skew(0.5deg); }
+    50% { transform: skew(-0.5deg); }
+    100% { transform: skew(0.2deg); }
+  }
+
+  @keyframes scanline {
+    0% { bottom: 100%; }
+    100% { bottom: -100px; }
+  }
+}
